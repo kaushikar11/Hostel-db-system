@@ -1,0 +1,66 @@
+.home-container {
+    padding: 20px;
+}
+
+.search-container {
+    margin-top: 100px;
+    margin-bottom: 20px;
+}
+
+.search-input {
+    padding: 15px; /* Increased padding for larger input */
+    font-size: 1.2rem; /* Increased font size */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 400px; /* Adjust width as needed */
+    margin-right: 10px;
+}
+.search-button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.results-container {
+    margin-top: 20px;
+}
+
+.results-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.student-link {
+    text-decoration: none;
+    color: #007bff;
+    font-weight: bold;
+}
+
+.student-link:hover {
+    text-decoration: underline;
+    color: #0056b3;
+}
+
+.button-container {
+    display: flex;
+    justify-content: flex-end; /* Align button to the right */
+    margin-right: 20px; /* Add margin for spacing */
+}
+
+.btn {
+    padding: 20px 40px;
+    background-color: #007bff; /* Blue button color */
+    color: #fff; /* White text color */
+    font-size: 1.2rem; /* Larger font size */
+    text-decoration: none;
+    border-radius: 8px; /* Rounded corners */
+    transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+}
