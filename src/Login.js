@@ -1,50 +1,24 @@
 import React, { useState } from 'react';
-import { signInWithEmailAndPassword, fetchSignInMethodsForEmail, getAuth } from 'firebase/auth';
-import { auth } from './firebase';
+import { signInWithEmailAndPassword, getAuth } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 import './Login.css';
 
 const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
     const [error, setError] = useState('');
-    const [step, setStep] = useState(1);
-    const navigate = useNavigate(); 
-
-    const handleEmailSubmit = async (e) => {
-        e.preventDefault();
-        try {
-          const auth = getAuth();
-        const user = auth.currentUser;
-        
-        if (!user) {
-            alert('No user is currently signed in');
-            setError('No user is currently signed in');
-            return;
-        }
-
-        const user_email = user.email;
-        if (email !== user_email) {
-            alert('Invalid email');
-            setError('Invalid email');
-        } else {
-            setStep(2); // Enable the password component
-            setError('');
-        }
-        } catch (error) {
-            console.error('Error checking email: ', error);
-            setError('Error checking email');
-            alert('Error checking email');
-        }
-    };
+    const navigate = useNavigate();
 
     const handleLogin = async (e) => {
         e.preventDefault();
         try {
+            const auth = getAuth();
             await signInWithEmailAndPassword(auth, email, password);
             alert("Login Successful");
             navigate('/root');
         } catch (error) {
+            console.error('Error logging in: ', error);
             setError('Invalid email/password');
             alert("Invalid email/password");
         }
@@ -56,39 +30,50 @@ const Login = () => {
                 <h2>Thiagarajar College of Engineering</h2>
                 <h1>Warden</h1>
                 {error && <p className="error">{error}</p>}
-                {step === 1 ? (
-                    <form onSubmit={handleEmailSubmit}>
+                <form onSubmit={handleLogin}>
+                    <div className="form-group">
                         <label htmlFor="email">Email:</label>
-                        <input
-                            type="email"
-                            id="email"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            required
-                        />
-                        <button type="submit">Next</button>
-                    </form>
-                ) : (
-                    <form onSubmit={handleLogin}>
-                      <label htmlFor="email">Email:</label>
-                        <input
-                            type="email"
-                            id="email"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            required
-                        />
+                        <div className="input-group">
+                            <div className="input-group-prepend">
+                                <span className="input-group-text"><i className="fas fa-user"></i></span>
+                            </div>
+                            <input
+                                type="email"
+                                id="email"
+                                className="form-control"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                required
+                            />
+                        </div>
+                    </div>
+                    <div className="form-group">
                         <label htmlFor="password">Password:</label>
-                        <input
-                            type="password"
-                            id="password"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                            required
-                        />
-                        <button type="submit">Login</button>
-                    </form>
-                )}
+                        <div className="input-group">
+                            <div className="input-group-prepend">
+                                <span className="input-group-text"><i className="fas fa-lock"></i></span>
+                            </div>
+                            <input
+                                type={showPassword ? "text" : "password"}
+                                id="password"
+                                className="form-control"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                required
+                            />
+                            <div className="input-group-append">
+                                <button
+                                    type="button"
+                                    className="btn btn-dark"
+                                    onClick={() => setShowPassword(!showPassword)}
+                                >
+                                    <i className={showPassword ? "fas fa-eye-slash" : "fas fa-eye"}></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit" className="btn btn-primary">Login</button>
+                </form>
             </div>
         </div>
     );
